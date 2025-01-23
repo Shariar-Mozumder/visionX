@@ -1,0 +1,66 @@
+**Job Title:** AI Engineer - Revolutionize the Future of Technology with TechFusion Solutions
+
+**Company Overview:**
+TechFusion Solutions is a global leader in AI-driven products, committed to fostering a collaborative, inclusive, and growth-oriented work culture. With a presence in over 20 countries and a strong focus on sustainability, we are shaping the future of technology. Our mission is to harness the power of Artificial Intelligence (AI) and Machine Learning (ML) to drive business success and improve customer experiences.
+
+**Job Summary:**
+We are seeking an exceptional AI Engineer to design, develop, and deploy AI models that drive business value and improve customer experiences. As a key member of our team, you will collaborate with cross-functional teams to integrate AI solutions into our products and services, ensuring seamless integration and optimal performance.
+
+**Key Responsibilities:**
+
+* Design, develop, and deploy AI models using various machine learning algorithms and frameworks (e.g., TensorFlow, PyTorch)
+* Collaborate with data scientists, product managers, and engineers to integrate AI solutions into our products and services
+* Develop and maintain AI-powered chatbots, virtual assistants, and other conversational interfaces
+* Conduct data analysis and modeling to identify business opportunities and optimize AI-driven solutions
+* Stay up-to-date with the latest AI trends, technologies, and best practices to ensure our solutions remain competitive and innovative
+* Participate in code reviews, contribute to open-source projects, and share knowledge with the team
+* Develop and maintain documentation for AI models, algorithms, and solutions
+* Collaborate with QA teams to ensure AI models are thoroughly tested and validated
+
+**Required Qualifications:**
+
+* Master's or Ph.D. in Computer Science, Artificial Intelligence, or related field
+* 5+ years of experience in AI engineering, machine learning, or related field
+* Strong proficiency in Python, TensorFlow, PyTorch, or other relevant AI frameworks
+* Experience with deep learning, natural language processing, computer vision, or other AI-related areas
+* Excellent problem-solving skills, attention to detail, and ability to work in a fast-paced environment
+* Strong communication and collaboration skills, with experience working with cross-functional teams
+
+**Preferred Qualifications:**
+
+* Experience with cloud-based AI platforms (e.g., AWS SageMaker, Google Cloud AI Platform)
+* Knowledge of computer vision, natural language processing, or other AI-related areas
+* Experience with AI-powered chatbots, virtual assistants, or other conversational interfaces
+* Familiarity with Agile development methodologies and version control systems (e.g., Git)
+* Certification in AI, machine learning, or related field (e.g., Certified Data Scientist, Certified AI Engineer)
+
+**Reporting Structure:**
+Reports directly to the Director of AI Engineering
+
+**Employment Type:**
+Full-time
+
+**Work Environment:**
+Office-based in Dhaka, Bangladesh
+
+**Physical Demands:**
+None required
+
+**Location:**
+Dhaka, Bangladesh
+
+**Benefits and Perks:**
+
+* Salary range: 80,000 - 120,000 BDT per annum
+* Comprehensive health insurance
+* Retirement plan
+* Flexible working hours
+* Professional development opportunities
+* Team-building events and social activities
+* Access to cutting-edge AI technologies and tools
+
+**Equal Opportunity Statement:**
+We are an equal-opportunity employer and value diversity at our company. All qualified applicants will receive consideration for employment without regard to race, color, religion, gender, gender identity, sexual orientation, national origin, disability, or veteran status.
+
+**Contact Information:**
+To apply, please submit your resume and cover letter to [careers@techfusionsolutions.com](careers@techfusionsolutions.com). For further inquiries, contact us at (123) 456-7890 or visit our careers page at www.techfusionsolutions.com/careers
