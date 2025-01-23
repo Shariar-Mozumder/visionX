@@ -147,27 +147,28 @@ def score_resume(cv_text,job_description):
         instructions=[
             "You are an AI-powered HR assistant designed to compare resumes with job descriptions and assess compatibility based on specific criteria.",
             "The compatibility score should be calculated out of 100, based on the following weightage:",
-            "- **Educational Background (15%)**: Match degrees, Academic, and fields of study.",
-            "- **Work Experience (30%)**: Match job roles, industries, and durations.",
-            "- **Skills and Certifications (25%)**: Match technical, domain-specific, and soft skills with job requirements.",
+            "- **Educational qualification check (15%)**: Verify if education meets minimum requirements and preferred qualifications.",
+            "- **Work Experience level assessment (30%)**: Evaluate years of relevant experience and seniority levels in previous roles.",
+            "- **Skills matching (25%)**: Match technical, domain-specific, and soft skills with job requirements.",
             "- **Project and Research Experience (15%)**: Match relevance to job responsibilities, technologies used, and outcomes.",
-            "- **Recognized Achievements (5%)**: Match any notable professional or academic accomplishments.",
-            "- **Preferred Qualifications (5%)**: Match cloud platforms, Agile experience, certifications, or other listed preferences.",
-            "- **Other Criteria (5%)**: Consider any additional information that aligns with the job description.",
+            "- **Gap analysis (5%)**: Identify and assess any career gaps, looking for explanations in Resume or cover letters.",
+            "- **Job hopping detection(5%)**: Review employment duration patterns and consider context for short tenures.",
+            "- **Achievement evaluation (5%)**: Assess the impact and relevance of listed achievements to the role.",
             "Use the resume text and job description provided to calculate the score.",
-            "Provide the following output in JSON format:",
+            "Provide the following output format start and end with (''') Strictly in JSON format:",
             '''
             {
-                "Compatibility Score": 87,  # Replace with the calculated score
-                "Match Analysis": {
-                    "Educational Background": "Bachelor's degree in AI aligns with the Master's degree requirement (partial match).",
-                    "Work Experience": "Experience in developing AI chatbots and ML models aligns well with job responsibilities.",
-                    "Skills and Certifications": "Strong match for Python, TensorFlow, PyTorch, and ML frameworks. Missing certifications.",
-                    "Project and Research Experience": "Relevant projects in AI and ML align with job needs.",
-                    "Recognized Achievements": "Published papers demonstrate innovation and expertise.",
-                    "Preferred Qualifications": "Some experience with cloud platforms but lacks Agile certification.",
-                    "Other Criteria": "Shows enthusiasm for AI trends and technologies."
-                }
+                
+                "Match_Analysis": {
+                    "Educational qualification check (15%)": "Give the score on the basis of Educational requirements out of 15 and explain why.",
+                    "Work Experience level assessment (30%)": "Give the score on the basis of Work Experience out of 30 and explain why.",
+                    "Skills matching (25%)": "Give the score on the basis of Skills matching out of 25 and explain why.",
+                    "Project and Research Experience (15%)": "Give the score on the basis of Project and Research Experience out of 15 and explain why.",
+                    "Gap analysis (5%)": "Give the score on the basis of Gap analysis out of 5 and explain why.",
+                    "Job hopping detection(5%)": "Give the score on the basis of Job hopping detection it out of 5 and explain why.",
+                    "Achievement evaluation (5%)": "Give the score on the basis of Achievement out of 5 and explain why."
+                },
+                "Compatibility_Score": **//100. The score will be the sum of all the match analysis score.
             }
             '''
         ],
