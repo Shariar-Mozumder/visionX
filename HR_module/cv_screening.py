@@ -292,13 +292,71 @@ total_score = calculate_total_score(similarity, keyword_score, experience, soft_
 
 
 
+# @app.post("/resume_screening/")
+# async def resume_screening(
+#     job_description: UploadFile = File(...), 
+#     resumes: List[UploadFile] = File(...)
+# ):
+#     try:
+#         # Read and save the job description
+#         job_desc_content = await job_description.read()
+#         Job_des_extracted_text = job_desc_content.decode("utf-8")
+
+#         resumes_texts = []
+#         similarity_scores = []
+#         ranking_report = []
+
+#         # Process each uploaded resume
+#         for resume_file in resumes:
+#             # Save file temporarily for processing
+#             with NamedTemporaryFile(delete=False, suffix=Path(resume_file.filename).suffix) as temp_file:
+#                 temp_file.write(await resume_file.read())
+#                 temp_file_path = temp_file.name
+
+#             # Extract text from the resume file
+#             resume_text = extract_text_from_file(temp_file_path)
+#             resumes_texts.append(resume_text)
+
+#             # Compute similarity score
+#             similarity = compute_similarity(Job_des_extracted_text, resume_text)
+#             similarity_scores.append(similarity)
+
+#             # Clean up the temporary file
+#             os.remove(temp_file_path)
+
+#         # Rank resumes based on similarity
+#         resume_list, score_result = rank_resume(Job_des_extracted_text, resumes_texts)
+
+#         # Prepare the ranking report
+#         for i in range(len(resumes)):
+#             analysis_score_report = {
+#                 "CV_Name": resumes[i].filename,
+#                 "resume_list": resume_list[i],
+#                 "similarity_score": similarity_scores[i],
+#                 "analysis_score_result": score_result[i]
+#             }
+#             ranking_report.append(analysis_score_report)
+
+#         return JSONResponse(content={"ranking_report": ranking_report})
+
+#     except Exception as e:
+#         return JSONResponse(status_code=500, content={"error": str(e)})
+
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
+from sqlalchemy import create_engine, text
+DATABASE_URL = 'mssql+pyodbc://DESKTOP-2419RQF/visionX?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes'
+engine = create_engine(DATABASE_URL)
+from db_operations import insert_candidate
+
+
 @app.post("/resume_screening/")
 async def resume_screening(
     job_description: UploadFile = File(...), 
     resumes: List[UploadFile] = File(...)
 ):
     try:
-        # Read and save the job description
+        # Read the job description content (expecting a .txt file)
         job_desc_content = await job_description.read()
         Job_des_extracted_text = job_desc_content.decode("utf-8")
 
@@ -308,8 +366,11 @@ async def resume_screening(
 
         # Process each uploaded resume
         for resume_file in resumes:
-            # Save file temporarily for processing
-            with NamedTemporaryFile(delete=False, suffix=Path(resume_file.filename).suffix) as temp_file:
+            # Determine file extension from the uploaded file
+            file_extension = os.path.splitext(resume_file.filename)[1]
+
+            # Save file temporarily for processing with the correct extension
+            with NamedTemporaryFile(delete=False, suffix=file_extension) as temp_file:
                 temp_file.write(await resume_file.read())
                 temp_file_path = temp_file.name
 
@@ -329,6 +390,20 @@ async def resume_screening(
 
         # Prepare the ranking report
         for i in range(len(resumes)):
+            candidate_data = {
+                "ContactInformation": resume_list[i].get("Contact Details"),
+                "AcademicEducation": resume_list[i].get("Education"),
+                "WorkExperience": resume_list[i].get("Work Experience"),
+                "Skills": resume_list[i].get("Skills and Certifications"),
+                "CompatibilityScore": score_result[i].get("Compatibility_Score"),
+                "SimilaritSscore": similarity_scores[i],
+                "Stage": 1,
+                "Shortlisted": 0,
+                "Joined": 0,
+                "Blacklisted": 0,
+            }
+
+            insert_candidate(candidate_data)
             analysis_score_report = {
                 "CV_Name": resumes[i].filename,
                 "resume_list": resume_list[i],
@@ -344,6 +419,3 @@ async def resume_screening(
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
-
-

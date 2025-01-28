@@ -1,0 +1,165 @@
+{
+    "ranking_report": [
+      {
+        "CV_Name": "Md_Shariar_Hossain_ML_CV.pdf",
+        "resume_list": [
+          {
+            "Contact Details": [
+              "Md Shariar Hossain",
+              "Phone: +8801853297010",
+              "Email: shmozumder2@gmail.com, shariar0112@student.nstu.edu.bd",
+              "Address: Mirpur-6, Dhaka, Bangladesh"
+            ],
+            "Work Experience": [
+              "Syntax Solution Ltd. (Nasir Group)\nMachine Learning Engineer (September 2024-Present)",
+              "NybSys Inc. (Bangladesh Office)\nSoftware Engineer (Backend-ML) (May 2022-June 2024)",
+              "Pro Data Ltd.\nSoftware Engineer (Android) (Mar 2021-April 2022)"
+            ],
+            "Project Experience": [
+              "• Interior Recommendation System using YOLO-v11 and AR\nInvolved with the Segmentation and Color recommendation part based on room background and furniture. Finetune YOLOv11-seg model with Custom dataset for Segmenting the Wall-Floor-Ceiling and furniture. Used label-Studio tool locally for image annotation.",
+              "• Custom Agentic RAG Chatbot for E-commerce customer support.\nLlama 3.2-3B LLM Fine-tuned with the custom company policy dataset. Used Langchain as framework for maintaining the agentic part and Prompt template, FAISS vector store for storing embeddings, and Sentence-transformers for retrieval. Used Fast-API for inference.",
+              "• Surveillance System using OpenCV and Ultralytics YOLO\nFine-tuned YOLOv8 model with the custom dataset for human detection and used OpenCV for other operations such as counting, saving, optimizing the frame. Used Fast-API for inference.",
+              "• Worked on various financial and Banking Android applications such as National Life Insurance, Mercantile Bank Ltd.",
+              "• RetrievalAugmentedGeneration(RAG)Q-AonholyQuran(Translation)andTafseer(Explaination)\nUsed Llama 3.2-3B for the Generative part. Used Langchain as framework for the Prompting, ReferencingandQ-A,FAISSvectorstoreforstoringembeddingsofQuranexcelfile,andSentence-transformers for retrieval of the verse.",
+              "• Fine-tune Stable diffusion model with custom Dataset for image to image generation\ntask\nThis is a very simple (for learning) project. Used runwayml-stable-diffusion-v1-5 model for fine-tuning with the custom sample fashion dataset.",
+              "• Medical data Fine-Tune model QA\nUsedaText2TextGenerationmodel(Bertbased)forfine-tuningwiththeMedicalSymptomswith\ndisease dataset. Uploaded the model and hosted it as QnA using Gradio in Huggingface space."
+            ],
+            "Research": [
+              "Thesis: Android Malware Detection System: A Machine Learning and Deep Learning based Mul- \ntiered Approach"
+            ],
+            "Academic Achievements": [
+              "BSc in Computer Science and Telecommunication Engineering (CGPA-3.30 out of 4.00)\nFeb 2017-Feb 2021",
+              "Higher Secondary Certificate (Science) - GPA 4.83 out of 5.00 (2015)",
+              "Secondary School Certificate (Science) - GPA 5.00 out of 5.00 (2013)"
+            ],
+            "Education": [
+              "Noakhali Science and Technology University\nBSc in Computer Science and Telecommunication Engineering (CGPA-3.30 out of 4.00)Feb 2017-Feb 2021",
+              "Feni Govt. College\nHigher Secondary Certificate (Science) - GPA 4.83 out of 5.00 (2015)",
+              "Central High School\nSecondary School Certificate (Science) - GPA 5.00 out of 5.00 (2013)"
+            ],
+            "Skills and Certifications": [
+              "Programming Languages: Python, C#, C++\nBackend Frameworks: Fast API, Django, Flask, .Net Core\nMachine learning frameworks and libraries: PyTorch, Tensorflow, Langchain, Scikit-learn, Pandas, Numpy, Matplotlib, Label-Studio.\nDatabase: SQL, Microsoft SQL Database, MongoDB, PostgreSQL.\nDevOps and Tools: Docker, AWS, Lambda, AppSync, Google cloud, SQS, SNS, MQTT, RabbitMQ, Git"
+            ],
+            "Recognized Achievements": [
+              "Publications:  \n• Hossain, M. S., & Riaz, M. H. (2022). Android malware detection system: a machine learning and\ndeeplearningbasedmultilayeredapproach. InIntelligentComputing&Optimization:Proceedings of the 4th\nInternational Conference on Intelligent Computing and Optimization 2021 (ICO2021) 3\n(pp. 277-287). Springer International Publishing.\n• Hossain, M. S., & Haque, A. B. (2022, September). Blockchain Based Services in Education: A\nBibliometric Analysis. In International Conference on Machine Intelligence and Emerging Tech-\nnologies (pp. 348-362). Cham: Springer Nature Switzerland.\n• PromptbasedFine-tuningofBanglaLanguageModelsforSequenceClassification(accepted-MIET 2024)"
+            ],
+            "Social Work/Volunteer": [
+              "Not mentioned"
+            ],
+            "Reference": [
+              "Not mentioned"
+            ],
+            "Other Section": [
+              "Research/Work Interests\n• Generative AI, Natural Language Processing (Analysis, LLMs, Multimodal, Generation, Summa-\rization, conversation, Q-A), Computer Vision (Classification, Detection, Segmentation, Genera-\ntion, Multimodel), Healthcare Informatics."
+            ]
+          }
+        ],
+        "similarity_score": 0.3705389201641083,
+        "analysis_score_result": {
+          "score_result": [
+            {
+              "Match_Analysis": {
+                "Educational qualification check (15%)": "The candidate holds a Bachelor's degree in Computer Science and Telecommunication Engineering, meeting the minimum requirement for the Master's/Ph.D. level position. Hence, a score of 15/15 is awarded.",
+                "Work Experience level assessment (30%)": "The candidate has 2+ years of experience as a Software Engineer working with backend-ML at NybSys Inc. and as a Machine Learning Engineer at Syntax Solutions Ltd. These roles align with the required experience for the AI Engineer position. Looking at the nature of work within these roles, a score of 27/30 is awarded.",
+                "Skills matching (25%)": "The candidate possesses strong proficiency in Python, TensorFlow, and PyTorch, all essential for AI engineering. The candidate also has experience with deep learning, natural language processing, and other relevant AI areas as indicated in the resume. Furthermore, experience with frameworks like Langchain, FastAPI, and databases like SQL, MongoDB, and PostgreSQL further strengthens their profile. Considering these extensive and relevant skills, a score of 22/25 is given.",
+                "Project and Research Experience (15%)": "The candidate showcases relevant project experience in areas like interior recommendation systems, chatbot development, surveillance systems, and medical data analysis. These projects demonstrate a practical understanding of AI concepts and technologies. Their published research on Android malware detection and a submitted study on Prompt-based Fine-tuning of Bangla Language Models for Sequence Classification further solidify their research capabilities and domain knowledge. Hence, a score of 14/15 is awarded.",
+                "Gap analysis (5%)": "There's no significant career gap mentioned in the resume. A score of 5/5 is given.",
+                "Job hopping detection(5%)": "The candidate has held three positions within a span of three years. While this might appear frequent, the changing roles suggest a progressive career trajectory with increasing responsibility. Considering the context and lack of evidence for job hopping, a score of 4/5 is awarded.",
+                "Achievement evaluation (5%)": "The candidate has published several research papers in relevant fields and has been recognized for their work.  A score of 5/5 is awarded."
+              },
+              "Compatibility_Score": 92
+            }
+          ]
+        }
+      },
+      {
+        "CV_Name": "Md_Shariar_Hossain_ML_CV.pdf",
+        "resume_list": "```json\n{   \n\"Contact Details\": [\"Md Shariar Hossain, Phone: +8801853297010, Email: shmozumder2@gmail.com, shariar0112@student.nstu.edu.bd, Address: Mirpur-6, Dhaka, Bangladesh\"], \n\"Work Experience\": [\n\"Syntax Solution Ltd. (Nasir Group), Machine Learning Engineer (September 2024-Present)\",\n\"NybSys Inc. (Bangladesh Office), Software Engineer (Backend-ML) (May 2022-June 2024)\",\n\"Pro Data Ltd., Software Engineer (Android) (Mar 2021-April 2022)\",\n\"Noakhali Science and Technology University, Undergraduate Research Assistant (Part-Time) (Mar. 2020 - Jan. 2021)\"\n],\n\"Project Experience\": [\n\"Interior Recommendation System using YOLO-v11 and AR at Syntax Solution Ltd. (Nasir Group), September 2024-Present\",\n\"Custom Agentic RAG Chatbot for E-commerce customer support at NybSys Inc. (Bangladesh Office) May 2022-June 2024\",\n\"Surveillance System using OpenCV and Ultralytics YOLO at NybSys Inc. (Bangladesh Office) May 2022-June 2024\",\n\"RetrievalAugmentedGeneration(RAG)Q-AonholyQuran(Translation)andTafseer(Explaination) Personal Project\",\n\"Fine-tune Stable diffusion model with custom Dataset for image to image generation task Personal Project\",\n\"Medical data Fine-Tune model QA Personal Project\"\n],\n\"Research\": [\n\"Android malware detection system: a machine learning and deeplearningbasedmultilayeredapproach.\",\n\"Blockchain Based Services in Education: A Bibliometric Analysis.\",\n\"PromptbasedFine-tuningofBanglaLanguageModelsforSequenceClassification(accepted-MIET 2024)\"\n],\n\"Academic Achievements\": [\"BSc in Computer Science and Telecommunication Engineering (CGPA-3.30 out of 4.00)\"],\n\"Education\": [\n\"Noakhali Science and Technology University, BSc in Computer Science and Telecommunication Engineering (CGPA-3.30 out of 4.00) (Feb 2017-Feb 2021)\",\n\"Feni Govt. College, Higher Secondary Certificate (Science) - GPA 4.83 out of 5.00 (2015)\",\n\"Central High School, Secondary School Certificate (Science) - GPA 5.00 out of 5.00 (2013)\"\n],\n\"Skills and Certifications\": [\n\"Programming Languages: Python, C#, C++\",\n\"Backend Frameworks: Fast API, Django, Flask, .Net Core\",\n\"Machine learning frameworks and libraries: PyTorch, Tensorflow, Langchain, Scikit-learn, Pandas, Numpy, Matplotlib, Label-Studio.\",\n\"Database: SQL, Microsoft SQL Database, MongoDB, PostgreSQL.\",\n\"DevOps and Tools: Docker, AWS, Lambda, AppSync, Google cloud, SQS, SNS, MQTT, RabbitMQ, Git\"\n],\n\"Recognized Achievements\": [\n\"Published paper \"Android malware detection system: a machine learning and deeplearningbasedmultilayeredapproach.\" in Proceedings of the 4th International Conference on Intelligent Computing and Optimization 2021 (ICO2021), \"\n],\n\"Social Work/Volunteer\": [\"Not mentioned\"],\n\"Reference\": [\"Not mentioned\"],\n\"Other Section\": [\"Not mentioned\"] \n}\n```",
+        "similarity_score": 0.3705389201641083,
+        "analysis_score_result": {
+          "score_result": [
+            {
+              "Match_Analysis": {
+                "Educational qualification check (15%)": "90%: The candidate holds a BSc in Computer Science and Telecommunication Engineering, meeting the minimum requirement of a Master's or Ph.D.  Preference for the advanced degree is considered, hence a slight deduction.",
+                "Work Experience level assessment (30%)": "75%: The candidate has 4+ years of relevant experience, meeting the 5+ year requirement. Recent experience as a Machine Learning Engineer at Syntax Solution Ltd. directly aligns with the job requirements.",
+                "Skills matching (25%)": "85%: The candidate demonstrates proficiency in Python, TensorFlow, PyTorch, and other relevant AI frameworks, as well as experience with deep learning, natural language processing, and computer vision, which are all essential for the role. ",
+                "Project and Research Experience (15%)": "95% :  The candidate's project history showcases relevant experience in developing AI-powered solutions, like chatbots and image recognition systems.  The research experience in Android malware detection,  Blockchain technology in education and Prompt-based fine-tuning of Bangla language models aligns well with the role's focus on AI development and research.",
+                "Gap analysis (5%)": "5%:  The resume shows a brief gap between academic studies and first professional role. A more detailed explanation in the cover letter can further clarify this.",
+                "Job hopping detection(5%)": "3% : Multiple short-term tenures raise an issue, suggesting potential challenges with job stability. However, the candidate's growth trajectory and increasing responsibility in each role could be highlighted in the cover letter to mitigate this concern. ",
+                "Achievement evaluation (5%)": "5%:  The publication of the Android malware detection research paper demonstrates a strong academic background and contribution to the field. More quantifiable achievements related to project outcomes would strengthen this score."
+              },
+              "Compatibility_Score": 77.5
+            }
+          ]
+        }
+      },
+      {
+        "CV_Name": "Samin-Yasar-Chowdhury_CV.pdf",
+        "resume_list": [
+          {
+            "Contact Details": [
+              "SAMIN YASAR CHOWDHURY",
+              "+8801999406661",
+              "saminc97@gmail.com",
+              "y3sar.github.io"
+            ],
+            "Work Experience": [
+              "Machine Learning Engineer",
+              "NybSys Inc",
+              "2022-Current",
+              "Developed and Maintain 3 microservices using FastAPI and Celery",
+              "Using FastAPI I have developed a REST API that has its own NoSQL database. I also developed 2 other microservice using python that monitors a 5G LTE system and uses event driven architecture to dispatch events to other microservices using an event bus. I have used Celery and RabbitMQ for the event bus. These microservices also sends realtime updates using REDIS Pub/Sub and Websockets to the front end"
+            ],
+            "Project Experience": [
+              "Developed a speech recognition system for Bangladesh Army finetuning a pretrained Whisper model into Bengali language; Whisper model was able to achieve 24 WER(word error rate).",
+              "Prepared a database combining Common Voice and OpenSLR.",
+              "I also had to set up a whole model evaluation pipeline using Weights and Biases and Sagemaker",
+              "Improved an existing surveillance system using YOLO and OpenCV. We had to optimize the frame streaming using Gstreamer and also used ImageZMQ to send frames to the backend for inference"
+            ],
+            "Research": [],
+            "Academic Achievements": [],
+            "Education": [
+              "Bachelor of Finance",
+              "Northsouth University",
+              "2018 - 2022"
+            ],
+            "Skills and Certifications": [
+              "Python",
+              "Django, FastAPI",
+              "Pytorch",
+              "huggingface transformers 🤗",
+              "Javascript/Typescript"
+            ],
+            "Recognized Achievements": [
+              "Developed a speech recognition system for Bangladesh Army finetuning a pretrained Whisper model into Bengali language; Whisper model was able to achieve 24 WER(word error rate)."
+            ],
+            "Social Work/Volunteer": [],
+            "Reference": [],
+            "Other Section": [
+              "Developed a GRPC server for fast streaming and communication with a Flutter APP and other microservices. We used GRPC because we had to send HUGE amounts of data to microservices and GRPC streaming was a perfect solution.",
+              "Developed a Simple CNN model and trained it on FER 2013 dataset to classify facial emotions ranging from Sad, Neutral, Surprise and Happy",
+              "Used A Masked RCNN model to do Instance Segmentation on an image and developing a UI with Gradio to blur the selected image by selecting the object id detected by the model",
+              "Implemented a RAG Question Answering system using sentence transformers and Pinecone vector database."
+            ]
+          }
+        ],
+        "similarity_score": 0.316092312335968,
+        "analysis_score_result": {
+          "score_result": [
+            {
+              "Match_Analysis": {
+                "Educational qualification check (15%)": "Applicant has a Bachelor of Finance degree, while the job requires a Master's or Ph.D. in Computer Science or related field. Score: 0/15. Candidate does not meet the minimum educational requirement.",
+                "Work Experience level assessment (30%)": "Applicant has 1 year of experience as a Machine Learning Engineer, which is less than the required 5+ years. Score: 5/30.  Candidate does not meet the minimum work experience requirement.",
+                "Skills matching (25%)": "Applicant possesses Python, FastAPI, PyTorch, and related AI frameworks skills, aligning with job requirements. Score: 20/25.",
+                "Project and Research Experience (15%)": "Applicant has relevant project experience in speech recognition, surveillance system improvement, and other AI domains. Score: 12/15. Projects demonstrate relevant skills and knowledge.",
+                "Gap analysis (5%)": "Work history shows a recent transition to machine learning engineering after a finance degree. Requires further assessment in the cover letter. Score: 3/5.",
+                "Job hopping detection(5%)": "Only one work experience listed, making job hopping evaluation inapplicable. Score: 5/5.",
+                "Achievement evaluation (5%)": "Applicant highlights achievements in speech recognition and surveillance system improvement projects. Score: 4/5."
+              },
+              "Compatibility_Score": 49
+            }
+          ]
+        }
+      }
+    ]
+  }

@@ -114,3 +114,38 @@ output_pdf_path = "output_report.pdf"
 # process_and_generate_pdf(input_text, output_pdf_path)
 # results=extract_Report_details(report)
 # print(results)
+
+
+
+import re
+import json
+from typing import List, Union, Optional
+
+def detect_jsons(input_string: str) -> Optional[List[Union[dict, list]]]:
+    """
+    Detects and extracts JSON objects or lists from a string.
+
+    Args:
+        input_string (str): The input string containing potential JSON.
+
+    Returns:
+        Optional[List[Union[dict, list]]]: A list of detected JSON objects or lists,
+                                            or None if no valid JSON is found.
+    """
+    # Regular expression to match JSON objects or arrays
+    json_pattern = r'(\{(?:[^{}]|(?R))*\}|\[(?:[^\[\]]|(?R))*\])'
+    
+    # Use findall to detect potential JSON strings
+    potential_jsons = re.findall(json_pattern, input_string)
+    detected_jsons = []
+    
+    for potential_json in potential_jsons:
+        try:
+            # Try to load the potential JSON string
+            parsed_json = json.loads(potential_json)
+            detected_jsons.append(parsed_json)
+        except json.JSONDecodeError:
+            # Skip invalid JSON strings
+            continue
+    
+    return detected_jsons if detected_jsons else None
