@@ -195,6 +195,7 @@ from dotenv import load_dotenv
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from datetime import datetime
 from HR_Module_agents import candidate_data
 load_dotenv()
 
@@ -232,83 +233,136 @@ def send_email(to_email: str, subject: str, body: str, attachment: Optional[str]
 
 # Request Models
 class ShortlistRequest(BaseModel):
-    email_ids: List[str]
+    email_id: str
+    meeting_link: str
+    screening_test_datetime: datetime
+
+
 
 class TestInvitationRequest(BaseModel):
-    email_ids: List[str]
-    meeting_link: str
-
-class TestResultRequest(BaseModel):
-    email_ids: List[str]
-    results: List[bool]
+    email_id: str
+    previous_test_result: str
+    test_meeting_link: str
+    test_time:datetime
 
 class FinalResultRequest(BaseModel):
-    email_ids: List[str]
-    results: List[bool]
-    offer_letter_path: Optional[str]
+    email_id: str
+    hr_interview_result: str
+    joining_date: datetime
 
 
-candidate_data={
-            "name":"Md Shariar Hossain"
-        }
+# candidate_data={
+#             "name":"Md Shariar Hossain"
+#         }
+from HR_Module_agents import normalize_data
+from db_operations import update_candidate
 # Endpoints
 @app.post("/shortlist")
 def send_shortlist_emails(request: ShortlistRequest):
-    for email in request.email_ids:
-        # candidate_data = agent.generate(f"Fetch data for {email}")
-        
-        subject = f"Shortlist Confirmation for {candidate_data['name']}"
-        body = f"Dear {candidate_data['name']},\n\nCongratulations! You have been shortlisted. Please find more details below.\n\nBest regards,\nHR Team"
-        send_email(email, subject, body)
+    email= request.get('email_id')
+    meeting_link= request.get('meeting_link')
+    screening_test_datetime= request.get('screening_test_datetime')
+    update_db={
+        "Shortlisted":"Shortlisted",
+        "Stage":"Screening",
+        "ScreeningDate":screening_test_datetime
+    }
+    response=update_candidate(update_db,email)
+    name=normalize_data(email,"Give me only my name")
+    if name:
+        subject = f"Shortlist Confirmation for {name}"
+        body = f"Dear {name},\n\nCongratulations! You have been shortlisted. We are interested to have a online screening test with you. Please find more details below.\n\n\nThe meeting time is: {screening_test_datetime} \n\nScreening Test meeting link: {meeting_link}\n\nBest regards,\nHR Team"
+    else:
+        subject = f"Shortlist Confirmation."
+        body = f"Dear Candidate,\n\nCongratulations! You have been shortlisted. We are interested to have a online screening test with you. Please find more details below.\n\n\nThe meeting time is: {screening_test_datetime} \n\nScreening Test meeting link: {meeting_link}\n\nBest regards,\nHR Team"
+    send_email(email, subject, body)
     return {"message": "Shortlist emails sent successfully"}
 
 @app.post("/online-screening-invitation")
 def send_online_screening_invitation(request: TestInvitationRequest):
     for email in request.email_ids:
         # candidate_data = agent.generate(f"Fetch data for {email}")
-        subject = f"Online Screening Test Invitation for {candidate_data['name']}"
-        body = f"Dear {candidate_data['name']},\n\nYou are invited to an online screening test. Please join using the following link: {request.meeting_link}\n\nBest regards,\nHR Team"
+        name=normalize_data(email,"Give me only my name")
+        if name:
+            subject = f"Online Screening Test Invitation for {candidate_data['name']}"
+            body = f"Dear {candidate_data['name']},\n\nYou are invited to an online screening test. Please join using the following link: {request.meeting_link}\n\nBest regards,\nHR Team"
+        else:
+            subject = f"Online Screening Test Invitation"
+            body = f"Dear Candidate,\n\nYou are invited to an online screening test. Please join using the following link: {request.meeting_link}\n\nBest regards,\nHR Team"
+        
         send_email(email, subject, body)
     return {"message": "Online screening test invitations sent successfully"}
 
 @app.post("/technical-test-invitation")
-def send_technical_test_invitations(request: TestResultRequest):
-    for email, result in zip(request.email_ids, request.results):
-        # candidate_data = agent.generate(f"Fetch data for {email}")
-        if result:
-            subject = f"Technical Test Invitation for {candidate_data['name']}"
-            body = f"Dear {candidate_data['name']},\n\nCongratulations on passing the online screening test! You are invited to a technical test.\n\nBest regards,\nHR Team"
-        else:
-            subject = f"Online Screening Test Result for {candidate_data['name']}"
-            body = f"Dear {candidate_data['name']},\n\nThank you for participating in the online screening test. Unfortunately, you did not pass. We wish you all the best for your future endeavors.\n\nBest regards,\nHR Team"
-        send_email(email, subject, body)
+def send_technical_test_invitations(request: TestInvitationRequest):
+    email_id=request.get('email_id')
+    screening_test_result=request.get('previous_test_result')
+    technical_test_meeting_link=request.get('test_meeting_link')
+    technical_test_time=request.get('test_time')
+    update_db={
+        "Stage":"Technical Interview",
+        "ScreeningResult":screening_test_result,
+        "TechnicalTestDate":technical_test_time
+    }
+    response=update_candidate(update_db,email_id)
+    name=normalize_data(email_id,"Give me only my name")
+    if name==None:
+        name='Candidate'
+    if screening_test_result=="pass":
+        subject = f"Technical Test Invitation for {name}"
+        body = f"Dear {name},\n\nCongratulations on passing the online screening test! You are invited to a technical test. Please find more details below.\n\n\nThe meeting time is: {technical_test_time} \n\nTechnical Test meeting link: {technical_test_meeting_link}\n\nBest regards,\nHR Team"
+    else:
+        subject = f"Online Screening Test Result for {name}"
+        body = f"Dear {name},\n\nThank you for participating in the online screening test. Unfortunately, you did not pass. We wish you all the best for your future endeavors.\n\nBest regards,\nHR Team"
+    send_email(email_id, subject, body)
     return {"message": "Technical test invitations and results sent successfully"}
 
 @app.post("/hr-interview-invitation")
-def send_hr_interview_invitations(request: TestResultRequest):
-    for email, result in zip(request.email_ids, request.results):
-        # candidate_data = agent.generate(f"Fetch data for {email}")
-        if result:
-            subject = f"HR Interview Invitation for {candidate_data['name']}"
-            body = f"Dear {candidate_data['name']},\n\nCongratulations on passing the technical test! You are invited to an HR interview.\n\nBest regards,\nHR Team"
-        else:
-            subject = f"Technical Test Result for {candidate_data['name']}"
-            body = f"Dear {candidate_data['name']},\n\nThank you for participating in the technical test. Unfortunately, you did not pass. We wish you all the best for your future endeavors.\n\nBest regards,\nHR Team"
-        send_email(email, subject, body)
+def send_hr_interview_invitations(request: TestInvitationRequest):
+    email_id=request.get('email_id')
+    technical_test_result=request.get('previous_test_result')
+    hr_test_meeting_link=request.get('test_meeting_link')
+    hr_test_time=request.get('test_time')
+    update_db={
+        "Stage":"HR Interview",
+        "TechnicalTestResult":technical_test_result,
+        "HrTestDate":hr_test_time
+    }
+    response=update_candidate(update_db,email_id)
+    name=normalize_data(email_id,"Give me only my name")
+    if name==None:
+        name='Candidate'
+    if technical_test_result=="pass":
+        subject = f"HR Interview Invitation for {name}"
+        body = f"Dear {name},\n\nCongratulations on passing the Technical test! You are invited to a HR Interview. Please find more details below.\n\n\nThe meeting time is: {hr_test_time} \n\nHR Interview meeting link: {hr_test_meeting_link}\n\nBest regards,\nHR Team"
+    else:
+        subject = f"Online Screening Test Result for {name}"
+        body = f"Dear {name},\n\nThank you for participating in the online screening test. Unfortunately, you did not pass. We wish you all the best for your future endeavors.\n\nBest regards,\nHR Team"
+    send_email(email_id, subject, body)
     return {"message": "HR interview invitations and results sent successfully"}
 
 @app.post("/final-result")
 def send_final_results(request: FinalResultRequest):
-    for email, result in zip(request.email_ids, request.results):
-        # candidate_data = agent.generate(f"Fetch data for {email}")
-        if result:
-            subject = f"Offer Letter for {candidate_data['name']}"
-            body = f"Dear {candidate_data['name']},\n\nCongratulations! We are pleased to offer you a position at our company. Please find your offer letter attached.\n\nBest regards,\nHR Team"
-            send_email(email, subject, body, attachment=request.offer_letter_path)
-        else:
-            subject = f"HR Interview Result for {candidate_data['name']}"
-            body = f"Dear {candidate_data['name']},\n\nThank you for participating in the HR interview. Unfortunately, you were not selected. We wish you all the best for your future endeavors.\n\nBest regards,\nHR Team"
-            send_email(email, subject, body)
+    email_id=request.get("email_id")
+    hr_interview_result=request.get("hr_interview_result")
+    joining_date=request.get("joining_date")
+    update_db={
+        "Stage":"Appointed",
+        "HrTestResult":hr_interview_result,
+        "JoiningDate":joining_date
+    }
+    response=update_candidate(update_db,email_id)
+    name=normalize_data(email_id,"Give me only my name")
+    if name==None:
+        name='Candidate'
+    if hr_interview_result:
+        subject = f"Final Interview result for {name}"
+        body = f"Dear {name},\n\nCongratulations! We are pleased to offer you a position at our company. We are inviting you to our office physically to join on date: {joining_date}\n\n\nPlease find your offer letter further email.\n\nBest regards,\nHR Team"
+        send_email(email_id, subject, body)
+    else:
+        subject = f"HR Interview Result for {name}"
+        body = f"Dear {name},\n\nThank you for participating in the HR interview. Unfortunately, you were not selected. We wish you all the best for your future endeavors.\n\nBest regards,\nHR Team"
+        send_email(email_id, subject, body)
     return {"message": "Final results sent successfully"}
 
 

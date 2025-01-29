@@ -282,22 +282,22 @@ def process_resume(cv_text):
     if parsed_json:
         return parsed_json
     else:
-        return raw_info
+        # return raw_info
 
-    # json_text=json.dumps(parsed_json, indent=4)
-    # pattern = r"```(.*?)```"
-    # match = re.search(pattern, raw_info, re.DOTALL)
-    
-    # if match:
-    #     try:
-    #         json_data= match.group(1).strip()
-    #         result=json.loads(json_data)
-    #         return result
-    #     except Exception as e:
-    #         print("Error in JSON: "+str(e))
-    #         return raw_info
-    # else:
-    #     return raw_info
+        # json_text=json.dumps(parsed_json, indent=4)
+        pattern = r"```(.*?)```"
+        match = re.search(pattern, cleaned_text, re.DOTALL)
+        
+        if match:
+            try:
+                json_data= match.group(1).strip()
+                result=json.loads(json_data)
+                return result
+            except Exception as e:
+                print("Error in JSON: "+str(e))
+                return cleaned_text
+        else:
+            return cleaned_text
 
 
 
@@ -366,7 +366,20 @@ def score_resume(cv_text,job_description):
     if parsed_json:
         return parsed_json
     else:
-        return raw_info
+        # return raw_info
+        pattern = r"```(.*?)```"
+        match = re.search(pattern, cleaned_text, re.DOTALL)
+        
+        if match:
+            try:
+                json_data= match.group(1).strip()
+                result=json.loads(json_data)
+                return result
+            except Exception as e:
+                print("Error in JSON: "+str(e))
+                return cleaned_text
+        else:
+            return cleaned_text
     # json_text=json.dumps(parsed_json, indent=4)
     # cleaned_text = raw_info.replace("\n", " ")
     # json_value=detect_and_parse_json(cleaned_text)
@@ -446,3 +459,54 @@ def candidate_data(cv_text):
         return parsed_json
     else:
         return raw_info
+    
+
+from rag_db import get_candidate_info
+def normalize_data(email,query):
+    """
+    Processes CV text to organize it into structured sections.
+    
+    Args:
+        cv_text (str): Plain text extracted from the CV.
+        language (str): Language of the CV text. Default is 'en' (English).
+        
+    Returns:
+        str: JSON response containing organized CV sections.
+    """
+    language=detect_language(query)
+    # Translate to English if necessary
+    # if language.lower() != "en":
+    
+    query = translate_to_english(query, language)
+
+    data=get_candidate_info(email,query)
+
+    # Initialize the HR agent
+    hr_agent = Agent(
+        name="Data presenter Agent",
+        # model=Ollama(id="llama2-13b"),  # LLM for processing and structuring text
+        # model=Groq(id='llama3-8b-8192'),
+        model=Groq(id='gemma2-9b-it'),
+        description="You are a data presenter chat  Agent who can prsent data like a chatbot with user query and database data.",
+        instructions=[
+            "You are a data presenter Agent who can present the information to user based on database data and user query.",
+            "Organize the information from the data you are given and generate response according to user query.",
+            "Do not add anything from your own,out of the given data.",
+            "Respond very smartly and to the point answer, but seems like you are chating with the user.",
+            "If the query is any contact information like Name, or Phone number, just give the name or number, noting else."
+        ],
+        markdown=True,
+    )
+
+    # Process the (translated) CV text
+    result = hr_agent.run(f"User Query: {query}, Fetched Data: {data}")
+    raw_info= result.content
+    cleaned_text = raw_info.replace("\n", " ")
+    return cleaned_text
+    # # parsed_json =detect_and_parse_json2(raw_info)
+    # cleaned_text = raw_info.replace("\n", " ")
+    # parsed_json=extract_json_from_string(cleaned_text)
+    # if parsed_json:
+    #     return parsed_json
+    # else:
+    #     return raw_info

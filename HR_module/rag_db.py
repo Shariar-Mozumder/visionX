@@ -33,11 +33,19 @@ sql_agent = Agent(
             [WorkExperience] [text] NULL,
             [Skills] [text] NULL,
             [CompatibilityScore] [int] NULL,
-            [SimilaritSscore] [float] NULL,
-            [Stage] [tinyint] NULL,
-            [Shortlisted] [bit] NULL,
-            [Joined] [bit] NULL,
-            [Blacklisted] [bit] NULL,
+            [SimilarityScore] [float] NULL,
+            [Stage] [text] NULL,
+            [Shortlisted] [text] NULL,
+            [ScreeningDate] [datetime] NULL,
+            [ScreeningResult] [text] NULL,
+            [TechnicalTestDate] [datetime] NULL,
+            [TechnicalTestResult] [text] NULL,
+            [HrTestDate] [datetime] NULL,
+            [HrTestResult] [text] NULL,
+            [JoiningDate] [datetime] NULL,
+            [Joined] [text] NULL,
+            [Blacklisted] [text] NULL,
+            [JobDescription] [text] NULL,
         CONSTRAINT [PK_Candidates] PRIMARY KEY CLUSTERED 
         (
             [CandidateID] ASC
@@ -116,14 +124,27 @@ def query_database(prompt):
     except Exception as e:
         return f"Error: {e}"
 
-# Example Usage
-if __name__ == "__main__":
-    email_address="saminc97@gmail.com"
-    user_prompt = "What is my Academic Education?"
-    final_prompt=f"My email address is: {email_address}, my query is: {user_prompt}"
+
+def get_candidate_info(email, query):
+    final_prompt=f"My email address is: {email}, my query is: {query}"
     query_results = query_database(final_prompt)
+    
     
     print("Query Results:")
     if query_results:
-        for row in query_results:
-            print(row)
+        return query_results
+    else:
+        return ("Not available in database.")
+        # for row in query_results:
+        #     print(row)
+# Example Usage
+# if __name__ == "__main__":
+#     email_address="shmozumder2@gmail.com"
+#     user_prompt = "What about my skill noted?"
+#     final_prompt=f"My email address is: {email_address}, my query is: {user_prompt}"
+#     query_results = query_database(final_prompt)
+    
+#     print("Query Results:")
+#     if query_results:
+#         for row in query_results:
+#             print(row)

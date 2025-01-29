@@ -391,19 +391,27 @@ async def resume_screening(
         # Prepare the ranking report
         for i in range(len(resumes)):
             candidate_data = {
-                "ContactInformation": resume_list[i].get("Contact Details"),
-                "AcademicEducation": resume_list[i].get("Education"),
-                "WorkExperience": resume_list[i].get("Work Experience"),
-                "Skills": resume_list[i].get("Skills and Certifications"),
-                "CompatibilityScore": score_result[i].get("Compatibility_Score"),
+                "ContactInformation": str(resume_list[i][0].get("Contact Details")),
+                "AcademicEducation": str(resume_list[i][0].get("Education")),
+                "WorkExperience": str(resume_list[i][0].get("Work Experience")),
+                "Skills": str(resume_list[i][0].get("Skills and Certifications")),
+                "CompatibilityScore": score_result[i].get("score_result")[0].get("Compatibility_Score"),
                 "SimilaritSscore": similarity_scores[i],
-                "Stage": 1,
-                "Shortlisted": 0,
-                "Joined": 0,
-                "Blacklisted": 0,
+                "Stage": "screening",
+                "Shortlisted": "Not decided",
+                "ScreeningDate": "1900-01-01T10:30:00",
+                "ScreeningResult": "Not decided",
+                "TechnicalTestDate": "1900-01-01T10:30:00",
+                "TechnicalTestResult": "Not decided",
+                "HrTestDate": "1900-01-01T10:30:00",
+                "HrTestResult": "Not decided",
+                "JoiningDate": "1900-01-01T10:30:00",
+                "Joined": "No",
+                "Blacklisted": "No",
+                "JobDescription": Job_des_extracted_text,
             }
 
-            insert_candidate(candidate_data)
+            res=insert_candidate(candidate_data)
             analysis_score_report = {
                 "CV_Name": resumes[i].filename,
                 "resume_list": resume_list[i],
