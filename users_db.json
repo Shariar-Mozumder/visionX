@@ -1,0 +1,34 @@
+{
+    "shmozumder2@gmail.com": {
+        "password": "shariar123",
+        "session_id": "7654bfe1-7807-4a90-8a2b-15c4c2fda4ab",
+        "chat_history": [
+            [
+                "What are ESAP's services?",
+                "ESAP assists businesses in migrating, modernizing, and integrating new solutions with their existing systems. \tYes, ESAP\u2019s solutions focus on cost optimization, improving efficiency, and automating repetitive processes. You can book a consultation by visiting the official website and filling out the contact form. \n"
+            ],
+            [
+                "What is my name?",
+                "Sorry, I have no information about this. Please contact ESAP for details. \n"
+            ],
+            [
+                "What is my name?",
+                "You are Md Shariar Hossain. \n"
+            ],
+            [
+                "What was my name?",
+                "Your name is Md Shariar Hossain. \n"
+            ]
+        ]
+    },
+    "sh1@gmail.com": {
+        "password": "1234",
+        "session_id": "6888171e-5b4b-4150-b52a-628fa175d191",
+        "chat_history": [
+            [
+                "What is my name?",
+                "Your name is not available in the FAQs provided. \n\n\n\n"
+            ]
+        ]
+    }
+}

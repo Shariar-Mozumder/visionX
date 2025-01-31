@@ -132,7 +132,7 @@ def get_candidate_info(email, query):
     
     print("Query Results:")
     if query_results:
-        return query_results
+        return str(query_results)
     else:
         return ("Not available in database.")
         # for row in query_results:

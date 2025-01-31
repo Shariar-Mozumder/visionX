@@ -212,7 +212,7 @@ from phi.model.groq import Groq
 
 # Load PDF file
 # loader = PyPDFLoader(file_path="C:/Users/Lenovo/Downloads/Md_Shariar_Hossain_ML_CV.pdf")
-loader=JSONLoader(file_path="HR_module/json_data.json",jq_schema=".",text_content=False)
+loader=JSONLoader(file_path="HR_module/FAQs.json",jq_schema=".",text_content=False)
 docs = loader.load()
 
 # Split text into chunks
@@ -229,15 +229,67 @@ retriever = db.as_retriever()
 # Create a knowledge base
 knowledge_base = LangChainKnowledgeBase(retriever=retriever)
 
+from langchain.tools import Tool
+
+from rag_db import get_candidate_info
+# def query_db(email, question):
+#     """Call the completed DB query agent to get an answer."""
+#     query_prompt = f"My email is {email}. Answer this from the database: {question}."
+#     return db_query_agent.run(query_prompt)  # Assuming db_query_agent is pre-built
+
+query_db_tool = Tool(
+    name="Database Query",
+    func=lambda question: get_candidate_info(candidate_email, question),
+    description="Use this tool when the answer should come from the database."
+)
+
+
+from langchain.memory import ConversationBufferMemory
+
+# Memory per email session
+memory = {}
+
+def get_memory(email):
+    """Retrieve or initialize memory for a given email address."""
+    if email not in memory:
+        memory[email] = ConversationBufferMemory(k=5)  # Store last 5 Q-A
+    return memory[email]
+
+from langchain.schema import AgentMemory
+candidate_email="saminc97@gmail.com"
+# Assuming get_memory returns ConversationBufferMemory
+candidate_memory = get_memory(candidate_email)
+
+# Wrap it inside AgentMemory
+agent_memory = AgentMemory(memory=candidate_memory)
+
 # Create the Knowledge Base Agent
+# knowledge_agent = Agent(
+#     name="Recruitment Agent",
+#     role="Answers the common questions about the recruitment information, progress and progress of a candidate from the given knowledge.",
+#     instructions=[
+#          "Use the knowledge base to answer the common questions about the recruitment information, progress and progress of a candidate.",
+#          "You will be given the candidate's email, identify the candidate by email and answer the question from his information.",
+#          "Do not answer anything without the knowledge base you are given.",
+#          "Follow the conversation context",
+#      ],
+#     model=Groq(id='gemma2-9b-it'),
+#     knowledge=knowledge_base,
+#     add_context=True,
+#     search_knowledge=True,
+#     debug=True,
+#     markdown=True,
+# )
+
+
 knowledge_agent = Agent(
-    name="Recruitment Agent",
-    role="Answers the common questions about the recruitment information, progress and progress of a candidate from the given knowledge.",
+    name="Company Inquery Agent",
+    role="Answers FAQs from knowledge base, recruitment questions and candidate progress queries from query db tool.",
     instructions=[
-         "Use the knowledge base to answer the common questions about the recruitment information, progress and progress of a candidate.",
-         "You will be given the candidate's email, identify the candidate by email and answer the question from his information.",
-         "Do not answer anything without the knowledge base you are given.",
-         "Follow the conversation context",
+         "Use the knowledge base for Frequently Asked Questions(FAQs).",
+         "For specific candidate details, use the database query tool.",
+         "Maintain conversation history and provide responses based on past 5 interactions.",
+         "Identify users by their email and keep session-based memory."
      ],
     model=Groq(id='gemma2-9b-it'),
     knowledge=knowledge_base,
@@ -245,10 +297,11 @@ knowledge_agent = Agent(
     search_knowledge=True,
     debug=True,
     markdown=True,
+    tools=[query_db_tool],  # Add the database query tool
+    memory=get_memory(candidate_email)  # Add per-user memory
 )
 
 
-candidate_email="saminc97@gmail.com"
 question="What is my Skills matching score?"
 prompt = (
     f"My email is {candidate_email}. "

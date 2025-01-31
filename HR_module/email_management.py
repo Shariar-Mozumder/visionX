@@ -242,13 +242,13 @@ class ShortlistRequest(BaseModel):
 class TestInvitationRequest(BaseModel):
     email_id: str
     previous_test_result: str
-    test_meeting_link: str
-    test_time:datetime
+    test_meeting_link: Optional[str] = None
+    test_time:Optional[str] = None
 
 class FinalResultRequest(BaseModel):
     email_id: str
     hr_interview_result: str
-    joining_date: datetime
+    joining_date: Optional[str] = None
 
 
 # candidate_data={
@@ -259,9 +259,9 @@ from db_operations import update_candidate
 # Endpoints
 @app.post("/shortlist")
 def send_shortlist_emails(request: ShortlistRequest):
-    email= request.get('email_id')
-    meeting_link= request.get('meeting_link')
-    screening_test_datetime= request.get('screening_test_datetime')
+    email= request.email_id
+    meeting_link= request.meeting_link
+    screening_test_datetime= request.screening_test_datetime
     update_db={
         "Shortlisted":"Shortlisted",
         "Stage":"Screening",
@@ -278,27 +278,27 @@ def send_shortlist_emails(request: ShortlistRequest):
     send_email(email, subject, body)
     return {"message": "Shortlist emails sent successfully"}
 
-@app.post("/online-screening-invitation")
-def send_online_screening_invitation(request: TestInvitationRequest):
-    for email in request.email_ids:
-        # candidate_data = agent.generate(f"Fetch data for {email}")
-        name=normalize_data(email,"Give me only my name")
-        if name:
-            subject = f"Online Screening Test Invitation for {candidate_data['name']}"
-            body = f"Dear {candidate_data['name']},\n\nYou are invited to an online screening test. Please join using the following link: {request.meeting_link}\n\nBest regards,\nHR Team"
-        else:
-            subject = f"Online Screening Test Invitation"
-            body = f"Dear Candidate,\n\nYou are invited to an online screening test. Please join using the following link: {request.meeting_link}\n\nBest regards,\nHR Team"
+# @app.post("/online-screening-invitation")
+# def send_online_screening_invitation(request: TestInvitationRequest):
+#     for email in request.email_ids:
+#         # candidate_data = agent.generate(f"Fetch data for {email}")
+#         name=normalize_data(email,"Give me only my name")
+#         if name:
+#             subject = f"Online Screening Test Invitation for {candidate_data['name']}"
+#             body = f"Dear {candidate_data['name']},\n\nYou are invited to an online screening test. Please join using the following link: {request.meeting_link}\n\nBest regards,\nHR Team"
+#         else:
+#             subject = f"Online Screening Test Invitation"
+#             body = f"Dear Candidate,\n\nYou are invited to an online screening test. Please join using the following link: {request.meeting_link}\n\nBest regards,\nHR Team"
         
-        send_email(email, subject, body)
-    return {"message": "Online screening test invitations sent successfully"}
+#         send_email(email, subject, body)
+#     return {"message": "Online screening test invitations sent successfully"}
 
 @app.post("/technical-test-invitation")
 def send_technical_test_invitations(request: TestInvitationRequest):
-    email_id=request.get('email_id')
-    screening_test_result=request.get('previous_test_result')
-    technical_test_meeting_link=request.get('test_meeting_link')
-    technical_test_time=request.get('test_time')
+    email_id=request.email_id
+    screening_test_result=request.previous_test_result
+    technical_test_meeting_link=request.test_meeting_link
+    technical_test_time=request.test_time
     update_db={
         "Stage":"Technical Interview",
         "ScreeningResult":screening_test_result,
@@ -319,10 +319,10 @@ def send_technical_test_invitations(request: TestInvitationRequest):
 
 @app.post("/hr-interview-invitation")
 def send_hr_interview_invitations(request: TestInvitationRequest):
-    email_id=request.get('email_id')
-    technical_test_result=request.get('previous_test_result')
-    hr_test_meeting_link=request.get('test_meeting_link')
-    hr_test_time=request.get('test_time')
+    email_id=request.email_id
+    technical_test_result=request.previous_test_result
+    hr_test_meeting_link=request.test_meeting_link
+    hr_test_time=request.test_time
     update_db={
         "Stage":"HR Interview",
         "TechnicalTestResult":technical_test_result,
@@ -343,9 +343,9 @@ def send_hr_interview_invitations(request: TestInvitationRequest):
 
 @app.post("/final-result")
 def send_final_results(request: FinalResultRequest):
-    email_id=request.get("email_id")
-    hr_interview_result=request.get("hr_interview_result")
-    joining_date=request.get("joining_date")
+    email_id=request.email_id
+    hr_interview_result=request.hr_interview_result
+    joining_date=request.joining_date
     update_db={
         "Stage":"Appointed",
         "HrTestResult":hr_interview_result,
@@ -367,4 +367,4 @@ def send_final_results(request: FinalResultRequest):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8080)
