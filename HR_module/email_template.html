@@ -1,0 +1,119 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESAP Ai</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            max-width: 100%;
+            height: auto;
+        }
+        .content {
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://static.wixstatic.com/media/630bc7_735bc25dffe645ed99a04c3bff90ec28~mv2.png/v1/crop/x_64,y_96,w_1791,h_578/fill/w_251,h_81,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Artboard%201.png" alt="Company Logo">
+        </div>
+        <div class="content">
+            <p>Dear {name},</p>
+            <p>{body}</p>
+            {meeting_time_html}
+            {meeting_link_html}
+        </div>
+        <div class="footer">
+            <p>Best regards,</p>
+            <p>HR Team</p>
+        </div>
+    </div>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESAP AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            max-width: 100%;
+            height: auto;
+        }
+        .content {
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: left;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://static.wixstatic.com/media/630bc7_735bc25dffe645ed99a04c3bff90ec28~mv2.png/v1/crop/x_64,y_96,w_1791,h_578/fill/w_251,h_81,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Artboard%201.png" alt="Company Logo">
+        </div>
+        <div class="content">
+            <p>Dear {{ name }},</p>
+            <p>{{ body }}</p>
+            {% if meeting_time%}
+                <p><strong>Meeting Time:</strong> {{ meeting_time }}</p>
+            {% endif %}
+            {% if meeting_link%}
+                <p><strong>Meeting Link:</strong> <a href="{{ meeting_link }}">{{ meeting_link }}</a></p>
+            {% endif %}
+        </div>
+        <div class="footer">
+            <p>Best regards,</p>
+            <p>HR Team</p>
+        </div>
+    </div>
+</body>
+</html>

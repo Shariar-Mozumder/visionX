@@ -192,15 +192,57 @@ from chromadb import Client
 from chromadb.config import Settings
 from chromadb.utils import embedding_functions
 from dotenv import load_dotenv
-import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 from HR_Module_agents import candidate_data
+from jinja2 import Template
 load_dotenv()
 
 app = FastAPI()
 
+# Load HTML template
+def load_email_template():
+    with open("HR_module/email_template.html", "r") as file:
+        return file.read()
+
+def send_email1( to_email: str, subject: str, body: str, meeting_time: Optional[str] = None, meeting_link: Optional[str] = None,name: Optional[str] = 'Candidate'):
+    # Load the HTML template
+    # template = load_email_template()
+    with open("HR_module/email_template.html", "r") as file:
+        template_content = file.read()
+    
+    # Create a Jinja2 template
+    template = Template(template_content)
+    
+    # Generate HTML for meeting time and link (if provided)
+    # meeting_time_html = f"<p><strong>Meeting Time:</strong> {meeting_time}</p>" if meeting_time else ""
+    # meeting_link_html = f"<p><strong>Meeting Link:</strong> <a href='{meeting_link}'>{meeting_link}</a></p>" if meeting_link else ""
+    
+    # Replace placeholders with actual data
+    email_body = template.render(
+        # name=body.split(",")[0].replace("Dear ", ""),  # Extract name from body
+        name=name,
+        body=body,
+        meeting_time=meeting_time,
+        meeting_link=meeting_link
+    )
+    
+    from_email="shmozumder2@gmail.com"
+    from_password="ilhnoxrbjlcnzldx"
+
+    message = MIMEMultipart()
+    message["From"] = "shmozumder2@gmail.com"
+    message["To"] = to_email
+    message["Subject"] = subject
+    message.attach(MIMEText(email_body, "html"))
+
+    # Send the email
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:  # Replace with your SMTP server details
+        server.login(from_email, from_password)
+        server.sendmail(from_email, to_email, message.as_string())
+
+    return (200,"Email sent")
 
 # Helper function for sending email
 def send_email(to_email: str, subject: str, body: str, attachment: Optional[str] = None):
@@ -243,12 +285,12 @@ class TestInvitationRequest(BaseModel):
     email_id: str
     previous_test_result: str
     test_meeting_link: Optional[str] = None
-    test_time:Optional[str] = None
+    test_time:Optional[datetime] = None
 
 class FinalResultRequest(BaseModel):
     email_id: str
     hr_interview_result: str
-    joining_date: Optional[str] = None
+    joining_date: Optional[datetime] = None
 
 
 # candidate_data={
@@ -268,14 +310,27 @@ def send_shortlist_emails(request: ShortlistRequest):
         "ScreeningDate":screening_test_datetime
     }
     response=update_candidate(update_db,email)
-    name=normalize_data(email,"Give me only my name")
+    name=normalize_data(email,"Give me only my name from contact information, if Not found, give the word 'Candidate'")
+    if name==None:
+        name='Candidate'
     if name:
-        subject = f"Shortlist Confirmation for {name}"
-        body = f"Dear {name},\n\nCongratulations! You have been shortlisted. We are interested to have a online screening test with you. Please find more details below.\n\n\nThe meeting time is: {screening_test_datetime} \n\nScreening Test meeting link: {meeting_link}\n\nBest regards,\nHR Team"
+        subject = f"ESAP Recruitment: Shortlist Confirmation for {name}"
+        # body = f"Dear {name},\n\nCongratulations! You have been shortlisted. We are interested to have a online screening test with you. Please find more details below.\n\n\nThe meeting time is: {screening_test_datetime} \n\nScreening Test meeting link: {meeting_link}\n\nBest regards,\nHR Team"
+        # body = f"Congratulations! You have been shortlisted. We are interested to have a online screening test with you. Please find more details below.\n\n\nBest regards,\nHR Team"
     else:
         subject = f"Shortlist Confirmation."
-        body = f"Dear Candidate,\n\nCongratulations! You have been shortlisted. We are interested to have a online screening test with you. Please find more details below.\n\n\nThe meeting time is: {screening_test_datetime} \n\nScreening Test meeting link: {meeting_link}\n\nBest regards,\nHR Team"
-    send_email(email, subject, body)
+        # body = f"Dear Candidate,\n\nCongratulations! You have been shortlisted. We are interested to have a online screening test with you. Please find more details below.\n\n\nThe meeting time is: {screening_test_datetime} \n\nScreening Test meeting link: {meeting_link}\n\nBest regards,\nHR Team"
+    body = f"Congratulations! You have been shortlisted. We are interested to have a online screening test with you. Please find more details below.\n\n\n"
+
+    # send_email(email, subject, body)
+    send_email1(
+        to_email=email,
+        subject=subject,
+        body=body,
+        meeting_time=screening_test_datetime,
+        meeting_link=meeting_link,
+        name=name
+    )
     return {"message": "Shortlist emails sent successfully"}
 
 # @app.post("/online-screening-invitation")
@@ -305,16 +360,24 @@ def send_technical_test_invitations(request: TestInvitationRequest):
         "TechnicalTestDate":technical_test_time
     }
     response=update_candidate(update_db,email_id)
-    name=normalize_data(email_id,"Give me only my name")
+    name=normalize_data(email_id,"Give me only my name from contact information, if Not found, give the word 'Candidate'")
     if name==None:
         name='Candidate'
     if screening_test_result=="pass":
-        subject = f"Technical Test Invitation for {name}"
-        body = f"Dear {name},\n\nCongratulations on passing the online screening test! You are invited to a technical test. Please find more details below.\n\n\nThe meeting time is: {technical_test_time} \n\nTechnical Test meeting link: {technical_test_meeting_link}\n\nBest regards,\nHR Team"
+        subject = f"ESAP Recruitment: Technical Test Invitation for {name}"
+        body = f"Congratulations on passing the online screening test! You are invited to a technical test. Please find more details below.\n\n\n"
     else:
-        subject = f"Online Screening Test Result for {name}"
-        body = f"Dear {name},\n\nThank you for participating in the online screening test. Unfortunately, you did not pass. We wish you all the best for your future endeavors.\n\nBest regards,\nHR Team"
-    send_email(email_id, subject, body)
+        subject = f"ESAP Recruitment: Online Screening Test Result for {name}"
+        body = f"Thank you for participating in the online screening test. Unfortunately, you did not pass. We wish you all the best for your future endeavors.\n\n"
+    # send_email(email_id, subject, body)
+    send_email1(
+        to_email=email_id,
+        subject=subject,
+        body=body,
+        meeting_time=technical_test_time,
+        meeting_link=technical_test_meeting_link,
+        name=name
+    )
     return {"message": "Technical test invitations and results sent successfully"}
 
 @app.post("/hr-interview-invitation")
@@ -329,16 +392,24 @@ def send_hr_interview_invitations(request: TestInvitationRequest):
         "HrTestDate":hr_test_time
     }
     response=update_candidate(update_db,email_id)
-    name=normalize_data(email_id,"Give me only my name")
+    name=normalize_data(email_id,"Give me only my name from contact information, if Not found, give the word 'Candidate'")
     if name==None:
         name='Candidate'
     if technical_test_result=="pass":
-        subject = f"HR Interview Invitation for {name}"
-        body = f"Dear {name},\n\nCongratulations on passing the Technical test! You are invited to a HR Interview. Please find more details below.\n\n\nThe meeting time is: {hr_test_time} \n\nHR Interview meeting link: {hr_test_meeting_link}\n\nBest regards,\nHR Team"
+        subject = f"ESAP Recruitment: HR Interview Invitation for {name}"
+        body = f"Congratulations on passing the Technical test! You are invited to a HR Interview. Please find more details below.\n\n\n"
     else:
-        subject = f"Online Screening Test Result for {name}"
-        body = f"Dear {name},\n\nThank you for participating in the online screening test. Unfortunately, you did not pass. We wish you all the best for your future endeavors.\n\nBest regards,\nHR Team"
-    send_email(email_id, subject, body)
+        subject = f"ESAP Recruitment: Online Screening Test Result for {name}"
+        body = f"Thank you for participating in the online screening test. Unfortunately, you did not pass. We wish you all the best for your future endeavors.\n\n"
+    # send_email(email_id, subject, body)
+    send_email1(
+        to_email=email_id,
+        subject=subject,
+        body=body,
+        meeting_time=hr_test_time,
+        meeting_link=hr_test_meeting_link,
+        name=name
+    )
     return {"message": "HR interview invitations and results sent successfully"}
 
 @app.post("/final-result")
@@ -352,17 +423,26 @@ def send_final_results(request: FinalResultRequest):
         "JoiningDate":joining_date
     }
     response=update_candidate(update_db,email_id)
-    name=normalize_data(email_id,"Give me only my name")
+    name=normalize_data(email_id,"Give me only my name, if Not found, give the word 'Candidate'")
     if name==None:
         name='Candidate'
     if hr_interview_result:
-        subject = f"Final Interview result for {name}"
-        body = f"Dear {name},\n\nCongratulations! We are pleased to offer you a position at our company. We are inviting you to our office physically to join on date: {joining_date}\n\n\nPlease find your offer letter further email.\n\nBest regards,\nHR Team"
-        send_email(email_id, subject, body)
+        subject = f"ESAP Recruitment: Final Interview result for {name}"
+        body = f"Congratulations! We are pleased to offer you a position at our company. We are inviting you to our office physically to join on date: {joining_date}\n\n\n"
+        # send_email(email_id, subject, body)
+        
     else:
-        subject = f"HR Interview Result for {name}"
-        body = f"Dear {name},\n\nThank you for participating in the HR interview. Unfortunately, you were not selected. We wish you all the best for your future endeavors.\n\nBest regards,\nHR Team"
-        send_email(email_id, subject, body)
+        subject = f"ESAP Recruitment: HR Interview Result for {name}"
+        body = f"Thank you for participating in the HR interview. Unfortunately, you were not selected. We wish you all the best for your future endeavors.\n\n"
+        # send_email(email_id, subject, body)
+    send_email1(
+    to_email=email_id,
+    subject=subject,
+    body=body,
+    meeting_time=None,
+    meeting_link=None,
+    name=name
+    )
     return {"message": "Final results sent successfully"}
 
 

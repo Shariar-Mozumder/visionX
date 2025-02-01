@@ -265,7 +265,7 @@ async def chat(chat_message: ChatMessage, email: str = Depends(authenticate_user
     context = "\n".join([f"Q: {q}\nA: {a}" for q, a in chat_history])
     prompt = (
         f"My email is {email}. Here is our conversation history:\n{context}\n"
-        f"Answer my question from the provided knowledge base or use 'query_database' tool: {chat_message.message}."
+        f"Answer my question from the provided knowledge base.: {chat_message.message}."
     )
     
     result = knowledge_agent.run(prompt)

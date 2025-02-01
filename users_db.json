@@ -18,6 +18,10 @@
             [
                 "What was my name?",
                 "Your name is Md Shariar Hossain. \n"
+            ],
+            [
+                "What is my name?",
+                "Your name is Md Shariar Hossain.  \n\n\n"
             ]
         ]
     },
@@ -28,6 +32,32 @@
             [
                 "What is my name?",
                 "Your name is not available in the FAQs provided. \n\n\n\n"
+            ]
+        ]
+    },
+    "farjanabristy40@gmail.com": {
+        "password": "1234",
+        "session_id": "2e9ed57a-e183-4c71-9f60-a0318d2ca81e",
+        "chat_history": [
+            [
+                "Search on database",
+                "Your name is Farjana Binte Hossain. \n\n\n\n"
+            ],
+            [
+                "How did you get the name?",
+                "I am sorry but I don't find any information on how your name was obtained. Would you like me to search something else?\n```"
+            ],
+            [
+                "What is my Phone number",
+                "Your phone number is +8801644166584.  \n"
+            ],
+            [
+                "What do you know about ESAP?",
+                "ESAP is a company that helps businesses adopt and leverage new technologies for digital transformation.  "
+            ],
+            [
+                "What is my screening result?",
+                "The screening result for your application is \"Not decided\". \n"
             ]
         ]
     }
