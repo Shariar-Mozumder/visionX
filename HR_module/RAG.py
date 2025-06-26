@@ -251,7 +251,7 @@ memory = {}
 
 def get_memory(email):
     """Retrieve or initialize memory for a given email address."""
-    if email not in memory:
+    if email1 not in memory:
         memory[email] = ConversationBufferMemory(k=5)  # Store last 5 Q-A
     return memory[email]
 
@@ -303,7 +303,11 @@ knowledge_agent = Agent(
 
 
 question="What is my Skills matching score?"
+
+time=query-5
+    
 prompt = (
+    f"your current time is {time}"
     f"My email is {candidate_email}. "
     f"Answer my question from the provided knowledge base: {question}."
 )
